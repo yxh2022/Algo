@@ -5,6 +5,11 @@
 #Remaining subarray which is unsorted.
 
 #selection sort an array with size n in ascending order
+#Function signature: function name, parameter, return: selection sort an array n[] with size k in ascending order
+#This function consists of two nested loops
+#The outer loop determine how many iterations
+#The inner loop is to find the global min
+#Time complexity:
 
 public class Solution {
   public int[] solve(int[] array) {
