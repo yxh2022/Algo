@@ -1,0 +1,43 @@
+public class Solution {
+  public int[] mergeSort(int[] array) {
+    // Write your solution here
+    if (array == null || array.length <=0){
+      return array;
+    }
+    int[] helper = new int[array.length];
+    mergesort(array, helper, 0, array.length-1);
+    return array;
+  }
+
+  public void mergesort(int[] arr, int[] helper,int start, int end){
+    if (start >= end){
+      return;
+    }
+    int mid = start+ (end - start)/2;
+    mergesort(arr, helper,start, mid);
+    mergesort(arr,helper, mid+1, end);
+    merge(arr,helper, start, mid, end);
+  }
+
+  public void merge(int[] arr, int[] helper, int left, int mid, int right){
+    int left_idx = left;
+    int right_idx = mid+1;
+    // copy the elements from arr to help, the right side element already in he right place
+    for (int i = left; i<=right; i++){
+      helper[i] = arr[i];
+    }
+    while (left_idx <= mid && right_idx <= right){
+      if (helper[left_idx]<helper[right_idx]){
+        arr[left++] = helper[left_idx++];
+      }
+      else{
+        arr[left++] = helper[right_idx++];
+      }
+    }
+    //if there are elements left in the left side, copy them to array
+    while (left_idx <= mid){
+        arr[left++] = helper[left_idx++];
+    } // if there are some elements at right side, we dont need to copy them because they are 
+      // already in the right position
+  }
+}
