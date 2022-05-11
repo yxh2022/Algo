@@ -1,0 +1,16 @@
+#The array is virtually split into a sorted and an unsorted part. Values from the unsorted part are picked and placed at the correct position in the sorted part.
+public class Solution {
+  public int[] sort(int[] array) {
+    // Write your solution here
+    for (int i = 1; i<array.length; i++){
+      int temp = array[i];
+      int idx = i-1;
+      while (idx>=0 && array[idx]>temp){
+        array[idx+1]=array[idx];
+        idx--;
+      }
+      array[idx+1] = temp;
+    }
+  return array;
+  }
+}
