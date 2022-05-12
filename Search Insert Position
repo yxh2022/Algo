@@ -1,0 +1,37 @@
+public class Solution {
+  public int searchInsert(int[] input, int target) {
+    // Write your solution here
+    if (input == null){
+      return -1;
+    }
+    else if (input.length == 0){
+      return 0;
+    }
+    int left = 0;
+    int right = input.length-1;
+    int mid = 0;
+    while (left<right-1){
+      mid = (left+right)/2;
+      if (input[mid]>=target){
+        right= mid; //因为如果有==， 插入前面，所以用first occurrance
+      }
+      else{
+        left = mid;
+      }
+    }
+    if (input[left] >= target){
+      if (left == 0){
+        return 0;
+      }
+      else{
+        return --left;
+      }
+    }
+    else if (input[right] < target) {
+      return ++right;
+    }
+    else{
+      return right;
+    }
+  }
+}
