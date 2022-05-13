@@ -1,0 +1,68 @@
+//O(logn) 解法
+//1) Find the middle index, say ‘mid’.
+//2) If ‘mid’ is even, then compare arr[mid] and arr[mid + 1]. 
+//If both are the same, then the required element after ‘mid’ and else before mid.
+//3) If ‘mid’ is odd, then compare arr[mid] and arr[mid – 1]. 
+//If both are the same, then the required element after ‘mid’ and else before mid.
+//注意 结果的index 一定是偶数，因为index从0开始
+public class Solution {
+  public int getSingleElement(int[] nums) {
+    // Write your solution here
+  if (nums.length == 1){
+    return nums[0];
+  }
+  int left = 0;
+  int right = nums.length-1;
+  int mid = 0;
+  while (left<right-1){
+    mid = (left+right)/2;
+    if (mid % 2 == 0){ //if mid is even
+      if (nums[mid] == nums[mid+1]){
+        left = mid;
+      }
+      else{
+        right = mid;
+      }
+    }
+    else{ //if mid is odd
+      if (nums[mid] == nums[mid-1]){
+         left = mid;
+      }
+      else{
+        right = mid;
+      }
+    }
+  }
+  if (left % 2 == 0){
+    return nums[left];
+  }
+  else {
+    return nums[right];
+  }
+  }
+}
+
+
+
+
+//O(n) 解法
+public class Solution {
+  public int getSingleElement(int[] nums) {
+    // Write your solution here
+    if (nums.length == 1){
+      return nums[0];
+    }
+    int i=0;
+    int target = nums[0]-1;
+    while (i<nums.length-1){
+      if (nums[i] != nums[i+1]){
+        return nums[i];
+      }
+      else i = i+2;
+    }
+    if (i== nums.length-1){// the single element is the last element
+      return nums[nums.length-1];
+    } 
+    return target;
+  }
+}
