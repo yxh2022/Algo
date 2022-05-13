@@ -1,0 +1,60 @@
+public class Solution {
+  public int totalOccurrence(int[] array, int target) {
+    // Write your solution here
+    // find the first occurrence and last occurrence
+    int total = 0;
+    if (array == null || array.length == 0){
+      return 0;
+    }
+    int first = firstOccurrence(array, target);
+    int last = lastOccurrence(array, target);
+    if (first >= 0){
+       total = last - first + 1;
+    }
+    return total;
+  }
+
+  public int firstOccurrence(int[] array, int target){
+    int left = 0;
+    int right = array.length -1;
+    int mid = 0;
+    while (left<right - 1){
+      mid = left+(right-left)/2;
+      if (array[mid]>=target){
+        right = mid;
+      }
+      else{
+        left = mid;
+      }
+    }
+    if (array[left] == target){
+      return left;
+    }
+    else if (array[right] == target){
+      return right;
+    }
+    else return -1; //如果返回 0 的话，无法区分是否是 index = 0
+  }
+
+    public int lastOccurrence(int[] array, int target){
+    int left = 0;
+    int right = array.length -1;
+    int mid = 0;
+    while (left<right - 1){
+      mid = left+(right-left)/2;
+      if (array[mid]>target){
+        right = mid;
+      }
+      else{
+        left = mid;
+      }
+    }
+    if (array[right] == target){
+      return right;
+    }
+    else if (array[left] == target){
+      return left;
+    }
+    else return -1;
+  }
+}
