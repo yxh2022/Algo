@@ -1,0 +1,39 @@
+public class Solution {
+  public int smallestElementLargerThanTarget(int[] array, int target) {
+    // Write your solution here
+    if (array == null || array.length ==0){
+      return -1;
+    }
+    // find the closest element
+    int left = 0;
+    int right = array.length-1;
+    int mid = 0;
+    while (left<right-1){
+      mid = (left+right)/2;
+      if (array[mid]<=target){ //相当于找last occurence
+        left = mid;
+      }
+      else if (array[mid]>target){
+        right = mid;
+      }
+      //问题：没考虑 duplicate 的情况
+      //else{
+        //if (mid == array.length-1){
+        //  return -1;
+       // }
+       // else{
+        //  return ++mid;
+       // }
+      //}
+    }
+    if (array[left]>target){ //不能只考虑right， 因为可能array[0]>target；
+      return left;
+    }
+    else if (array[right]>target){
+      return right;
+    }
+    else{
+      return -1;
+    }
+  }
+}
