@@ -1,0 +1,48 @@
+public class Solution {
+  public int[] kClosest(int[] array, int target, int k) {
+    // first find the closest element, and explore from the closest element to both end and the array
+    int[] rlt = new int[k];
+    if (k == 0){
+      return rlt;
+    }
+    int left = 0;
+    int right = array.length-1;
+    int mid = 0;
+    while (left<right-1){
+      mid = (left+right)/2;
+      if (array[mid] >= target){
+        right = mid;
+      }
+      else{
+        left = mid;
+      }
+    }
+    int closet = -1;
+    if (Math.abs(array[left]-target)>Math.abs(array[right]-target)){
+      closet = right;
+    }
+    else{
+      closet = left;
+    }
+    rlt[0] = array[closet];
+    left = closet-1;
+    right = closet+1;
+    for (int i=1; i<k; i++){
+      if (left < 0){
+        rlt[i] = array[right++];
+      }
+      else if (right > array.length-1){
+        rlt[i] = array[left--];
+      }
+      else{
+        if (Math.abs(array[left]-target)>Math.abs(array[right]-target)){
+          rlt[i] = array[right++];
+        }
+        else{
+          rlt[i] = array[left--];
+        }
+      }
+    }
+    return rlt;
+  }
+}
