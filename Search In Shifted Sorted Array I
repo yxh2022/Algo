@@ -7,50 +7,60 @@ public class Solution {
     if (array == null || array.length == 0){
       return -1;
     }
-    int left = 0;
+    int pivot = findPivot(array);
+    if (pivot == -1){
+      return binarySearch(array, 0, array.length-1, target);
+    }
+    else{
+      if (target>=array[0]){
+        return binarySearch(array, 0, pivot-1, target);
+      }
+      else{
+        return binarySearch(array, pivot, array.length-1, target);
+      }
+    }
+    
+  }
+  public int findPivot(int[] array){ // return the index of the smallest element
+    int left= 0;
     int right = array.length-1;
     int mid = 0;
-    while(left < right -1){
+    if (array[right]>=array[0]){ // check if the array is not rotated or arraylength == 1
+      return -1;
+    }
+    while (left<right-1){
       mid = (left+right)/2;
-      if (array[mid] == target){
+      if (array[mid]>=array[0]){ //mid is located in the first part and target is in the second part
+        left = mid;
+      }
+      if (array[mid]<array[0]){ //mid is located in the second part
+        right = mid;
+      }
+    }
+    return right;
+  }
+  public int binarySearch(int[] array, int start, int end, int target){
+    int left= start;
+    int right = end;
+    int mid = 0;
+    while (left<right-1){
+      mid = (left+right)/2;
+      if (array[mid]==target){ //mid is located in the first part and target is in the second part
         return mid;
       }
-      else if (array[mid] > target){ 
-        if ( array[mid] < array[0]){// mid is located in second part
-          right = mid;
-        }
-        // mid is located in the first part
-        else{ // if (array[mid] >= array[0])
-          if (target >= array[0]){ //target is located in the first part
-            right = mid;
-          }
-          else{
-            left = mid;
-          }
-        }
+      else if (array[mid]>target) { //mid is located in the second part
+        right = mid;
       }
-      else{ // (array[mid] < target)  
-        if(array[mid] >= array[0]){ // mid is located in first part
-          left = mid;
-        }
-        else{ // if(array[mid] < array[0])  mid is located in second part
-          if (target >= array[0]){ //target is located in the first part
-             right = mid;
-          }
-         else{
-           left = mid;
-         }
-        }
+      else {
+        left = mid;
       }
     }
     if (array[left]== target){
       return left;
     }
-    else if  (array[right]== target){
+    else if (array[right]== target){
       return right;
     }
-    else {
-      return -1;
-    }
+    else return -1;
   }
 }
