@@ -1,0 +1,30 @@
+https://app.laicode.io/app/problem/34
+
+/**
+ * class ListNode {
+ *   public int value;
+ *   public ListNode next;
+ *   public ListNode(int value) {
+ *     this.value = value;
+ *     next = null;
+ *   }
+ * }
+ */
+public class Solution {
+  public ListNode reverse(ListNode head) {
+    // Write your solution here
+    if (head == null || head.next == null){ //没有或只有一个node
+      return head;
+    }
+    ListNode pre = null;
+    ListNode cur = head;
+    ListNode tmp = null;
+    while (cur != null){
+      tmp = cur.next;
+      cur.next = pre;
+      pre = cur;
+      cur = tmp;
+    }
+    return pre;
+  }
+}
