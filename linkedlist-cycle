@@ -1,0 +1,31 @@
+https://leetcode.com/problems/linked-list-cycle/submissions/
+// use two pointors, and the fast pointer is always one step faster then slow pointer on each run, so if there is circle, they will meet.
+
+/**
+ * Definition for singly-linked list.
+ * class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) {
+ *         val = x;
+ *         next = null;
+ *     }
+ * }
+ */
+public class Solution {
+    public boolean hasCycle(ListNode head) {
+        if (head ==  null || head.next == null){
+            return false;
+        }
+        ListNode slow = head;
+        ListNode fast = head;
+        while (fast !=null && fast.next !=null){
+            if (fast.val == slow.val){ //only when there are no duplicate value
+                return true;
+            }
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        return false;
+    }
+}
