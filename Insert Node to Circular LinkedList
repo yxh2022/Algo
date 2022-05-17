@@ -1,0 +1,44 @@
+/*
+// Definition for a Node.
+class Node {
+    public int val;
+    public Node next;
+
+    public Node() {}
+
+    public Node(int _val) {
+        val = _val;
+    }
+
+    public Node(int _val, Node _next) {
+        val = _val;
+        next = _next;
+    }
+};
+*/
+
+class Solution {
+    public Node insert(Node head, int insertVal) {
+        Node node = new Node(insertVal);
+        if (head == null){
+            node.next = node;
+            return node;
+        }
+        Node pre = head; //需要两个variable 否则走不完一个circle,总会差一个
+        Node cur = head.next;
+        while(pre.next != head){
+            if(pre.val<=insertVal && insertVal<=cur.val ){ // 3->4->1 插入2
+                break;
+            }
+            else if (pre.val > cur.val && (insertVal > pre.val || insertVal < cur.val)){ // 3->4->1 插入5或0
+                break;
+            }
+            pre = cur;
+            cur = cur.next;      
+        }
+        
+        node.next = cur;
+        pre.next = node;
+        return head;                                  
+        }
+    }
