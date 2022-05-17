@@ -1,0 +1,38 @@
+https://leetcode.com/problems/partition-list/
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode partition(ListNode head, int x) {
+        if(head == null){
+            return null;
+        }
+        ListNode cur = head;
+        ListNode dummysmall = new ListNode();
+        ListNode dummylarge = new ListNode();
+        ListNode smalltail = dummysmall;
+        ListNode largetail = dummylarge;
+        while(cur != null){
+            if (cur.val<x){
+                smalltail.next = cur;
+                smalltail = cur;
+            }
+            else{
+                largetail.next = cur;
+                largetail = cur;
+            }
+            cur = cur.next;
+        }
+          largetail.next = null;  //注意结尾指向null，否则会有circle
+           smalltail.next = dummylarge.next;
+            return dummysmall.next;
+    }
+}
