@@ -1,0 +1,54 @@
+https://leetcode.com/problems/check-completeness-of-a-binary-tree/
+
+//if one node is missing a child, then any nodes behind this node could be expanded.
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public boolean isCompleteTree(TreeNode root) {
+        if (root ==  null){
+            return false;
+        }        
+        LinkedList<TreeNode> res = new LinkedList<>();
+        Deque<TreeNode> q = new LinkedList<>();
+        q.offer(root);
+        int level = 0;
+        boolean isMissing = false;
+        while (!q.isEmpty()){
+            int size = q.size();
+            for (int i = 0; i < size; i++){
+                TreeNode tmp = q.remove();
+                if (isMissing == true 
+                    && (tmp.left != null || tmp.right != null)){ //if there is a node missing a child before, then the remaining nodes shouldn't be expanded.             
+                    return false;
+                }
+                if (tmp.left == null && tmp.right != null){
+                    return false;
+                }
+                if (tmp.left == null || tmp.right == null){
+                    isMissing = true;
+                }
+                if (tmp.left != null){
+                    q.offer(tmp.left);
+                }
+                if (tmp.right != null){
+                    q.offer(tmp.right);
+                }
+            }        
+        }
+        return true;
+    }
+}
