@@ -19,36 +19,30 @@ https://leetcode.com/problems/check-completeness-of-a-binary-tree/
  */
 class Solution {
     public boolean isCompleteTree(TreeNode root) {
-        if (root ==  null){
+        if (root == null){
             return false;
-        }        
-        LinkedList<TreeNode> res = new LinkedList<>();
-        Deque<TreeNode> q = new LinkedList<>();
-        q.offer(root);
-        int level = 0;
+        }
+        LinkedList<TreeNode> q = new LinkedList<TreeNode>();
+        q.add(root);
         boolean isMissing = false;
         while (!q.isEmpty()){
-            int size = q.size();
-            for (int i = 0; i < size; i++){
-                TreeNode tmp = q.remove();
-                if (isMissing == true 
-                    && (tmp.left != null || tmp.right != null)){ //if there is a node missing a child before, then the remaining nodes shouldn't be expanded.             
+            TreeNode tmp = q.remove();
+            if (isMissing == true && (tmp.left !=null || tmp.right!=null)){
+                return false;
+            }
+            if (tmp.left == null && tmp.right != null){
                     return false;
                 }
-                if (tmp.left == null && tmp.right != null){
-                    return false;
-                }
-                if (tmp.left == null || tmp.right == null){
-                    isMissing = true;
-                }
-                if (tmp.left != null){
-                    q.offer(tmp.left);
-                }
-                if (tmp.right != null){
-                    q.offer(tmp.right);
-                }
-            }        
+            if (tmp.left ==null || tmp.right==null){
+                isMissing = true;
+            }
+            if (tmp.left !=null){
+                q.add(tmp.left);
+            }
+            if (tmp.right !=null){
+                q.add(tmp.right);
+            }
         }
         return true;
-    }
+    } 
 }
