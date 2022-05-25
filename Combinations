@@ -1,0 +1,23 @@
+https://leetcode.com/problems/combinations/
+
+class Solution {
+    public List<List<Integer>> combine(int n, int k) {
+        
+        LinkedList<List<Integer>> res = new LinkedList<List<Integer>>();
+        LinkedList<Integer> comb = new LinkedList<Integer>();
+        helper(n, k, 1, res, comb);
+        return res;
+    }
+    
+    public void helper(int n, int k, int cur, LinkedList<List<Integer>> res, LinkedList<Integer> comb) {
+        if (comb.size() == k){
+            res.add(new LinkedList(comb));
+            return;
+        }
+        for (int i = cur; i<=n; i++){
+            comb.add(i);
+            helper(n, k, i+1, res, comb);
+            comb.remove(comb.size()-1);
+        }
+    }
+}
