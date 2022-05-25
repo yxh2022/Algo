@@ -1,0 +1,28 @@
+https://leetcode.com/problems/combination-sum-iii/
+
+class Solution {
+    public List<List<Integer>> combinationSum3(int k, int n) {
+        List<List<Integer>> res = new LinkedList<List<Integer>>();
+        helper(k, n, res, new LinkedList<Integer>(), 1);
+        return res;
+        
+    }
+    public void helper(int k, int rem, List<List<Integer>> res, LinkedList<Integer> comb, int cur){
+        if (comb.size()==k && rem ==0){
+            res.add(new LinkedList(comb));
+            return;
+        }
+        else if (comb.size()==k || rem <=0){ // terminate earlier
+            return;
+        }
+        for (int i =cur; i<=9; i++){
+            if (i>rem){
+                break;
+            }
+            comb.push(i);
+            helper(k, rem-i, res, comb, i+1);
+            comb.pop();
+        }
+    }
+}
+
