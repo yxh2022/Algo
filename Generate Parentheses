@@ -1,0 +1,31 @@
+https://leetcode.com/problems/generate-parentheses/
+
+
+class Solution {
+    public List<String> generateParenthesis(int n) {
+        LinkedList<String> res = new LinkedList();
+        StringBuilder str = new StringBuilder();
+        if (n == 0){
+            return res;
+        }
+        allParenthesis(n, res, str, 0,0);
+        return res;
+    }
+    
+    public void allParenthesis(int n, LinkedList<String> res, StringBuilder str, int left, int right) {
+        if (right == n){
+            res.add(str.toString());
+        }
+        if (left<n){
+         str.append("(");   
+         allParenthesis(n, res, str, left+1, right) ;
+         str.deleteCharAt(str.length()-1);
+        }
+        if (left >right){
+            str.append(")");
+            allParenthesis(n, res, str, left, right+1);  
+            str.deleteCharAt(str.length()-1);
+        }
+           
+    }
+}
