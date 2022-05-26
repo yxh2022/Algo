@@ -1,0 +1,51 @@
+https://leetcode.com/problems/permutations-ii/
+
+class Solution {
+    public List<List<Integer>> permuteUnique(int[] nums) {
+        List<List<Integer>> res = new LinkedList();
+        LinkedList<Integer> perm = new LinkedList();
+
+        HashMap<Integer, Integer> input = new HashMap<Integer, Integer>();
+        for (int i: nums){
+           // if (!input.containsKey(i)){
+           //     input.put(i,1);
+           // }
+           //  else{
+           //     input.put(i,input.get(i)+1);
+           //  }
+            //更简洁
+           if (!input.containsKey(i)){
+                input.put(i,0);
+            }
+           input.put(i,input.get(i)+1);
+        }
+        helper(input, perm, res, nums.length);
+        return res;
+        
+    }
+    
+    
+    public void helper(HashMap<Integer, Integer> nums, LinkedList<Integer> perm, List<List<Integer>> res, int length) {
+        if (perm.size() == length){
+            res.add(new LinkedList<Integer>(perm));
+            return;
+        }
+        for (Map.Entry<Integer, Integer> entry: nums.entrySet()){
+            int num = entry.getKey();
+            int counter = entry.getValue();
+            if (counter>0)
+            {
+                perm.push(num);
+                nums.put(num, counter-1);
+                helper(nums, perm, res, length);
+                perm.pop();
+                nums.put(num, counter); //注意不是counter+1
+            }
+            else{
+                continue;
+            }
+        }
+        
+    }
+    
+}
