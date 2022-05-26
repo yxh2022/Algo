@@ -1,0 +1,54 @@
+class Solution {
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        LinkedList<List<Integer>> res = new  LinkedList<List<Integer>>();
+        LinkedList<Integer> tmp = new LinkedList<Integer>();
+       // int level = candidates.length;
+        helper(candidates, res, tmp, 0 ,target);
+        // Arrays.sort(candidates);
+    //     helper(candidates, target, res, tmp, 0);
+         return res;
+    // }
+    // public void helper(int[] candidates, int rem, LinkedList<List<Integer>> res,LinkedList<Integer> tmp, int idx) {
+    //     if (rem == 0){
+    //         LinkedList<Integer> comb = new LinkedList(tmp);
+    //         res.add(comb);
+    //         return;
+    //     }
+    //     if (idx == candidates.length){
+    //         return;
+    //     }
+    //     for (int i = idx; i< candidates.length; i++){
+    //         if (candidates[i]>rem){
+    //             break;
+    //         }
+    //         tmp.push(candidates[i]);
+    //         helper(candidates, rem - candidates[i], res, tmp, i);
+    //         tmp.pop();
+         }
+    
+    //    不同分叉法     /     /    \       \
+    //                2(0)  2(1)   2(2)    2(3)
+    //每层只放一种
+        
+        public void helper(int[] candidates, LinkedList<List<Integer>> res, LinkedList<Integer> tmp, int level, int rem ){
+            if (rem == 0){
+                LinkedList<Integer> comb = new LinkedList(tmp);
+                res.add(comb);
+                return;
+            }
+            if (level >= candidates.length || rem<0){
+                return;
+            }
+            for (int i = 0; i<=rem/candidates[level]; i++ ){
+                for (int j = 1; j<=i; j++ ){
+                  tmp.push(candidates[level]);  
+                }
+                helper(candidates,res,  tmp, level+1, rem-candidates[level]*i );
+                
+                for (int j = 1; j<=i; j++ ){
+                  tmp.pop();
+                }
+            }
+        }
+}
+
