@@ -3,12 +3,21 @@ https://leetcode.com/problems/combination-sum-ii/
 class Solution {
     public List<List<Integer>> combinationSum2(int[] candidates, int target) {
         LinkedList<List<Integer>> res = new  LinkedList<List<Integer>>();
-         LinkedList<Integer> tmp = new LinkedList<Integer>();
-        Arrays.sort(candidates);
-        helper(candidates, target, res, tmp, 0);
+        LinkedList<Integer> tmp = new LinkedList<Integer>();
+
+        HashMap<Integer,Integer> input = new HashMap<Integer,Integer>();
+        for (int i: candidates){
+            if (!input.containsKey(i)){
+                input.put(i,0);
+            }
+            input.put(i,input.get(i)+1);
+        }
+        LinkedList<int []> in = new LinkedList();
+        input.forEach((key, value)->in.add(new int[] {key,value}));
+        helper(in, target, res, tmp,0);
         return res;
     }
-    public void helper(int[] candidates, int rem, LinkedList<List<Integer>> res,LinkedList<Integer> tmp, int idx) {
+    public void helper(LinkedList<int []> input, int rem, LinkedList<List<Integer>> res, LinkedList<Integer> tmp, int cur) {
         if (rem == 0){
             LinkedList<Integer> lst = new LinkedList(tmp); // deep copy
             res.add(lst);
@@ -17,16 +26,49 @@ class Solution {
             return;
         }
 
-        for (int i = idx; i< candidates.length; i++){
-            if (candidates[i]>rem){
-                break; // candidates is sorted
-            }
-            if (i>idx && candidates[i-1]==candidates[i]){
+        for (int i = cur; i<input.size(); i++){ //如果没有cur,i== 0就没法分层，
+           int[] en = input.get(i);
+            if (en[1] <= 0){
                 continue;
             }
-            tmp.push(candidates[i]);
-            helper(candidates, rem-candidates[i], res, tmp, i+1);
+            tmp.push(en[0]);
+            input.set(i, new int[]{en[0], en[1]-1});//如果为--en[1]， 后面要为++en[1]
+            helper( input, rem-en[0], res, tmp, i);
             tmp.pop();
+            input.set(i, new int[]{en[0], en[1]});
         }
     }
 }
+
+
+
+// class Solution {
+//     public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+//         LinkedList<List<Integer>> res = new  LinkedList<List<Integer>>();
+//          LinkedList<Integer> tmp = new LinkedList<Integer>();
+//         Arrays.sort(candidates);
+//         helper(candidates, target, res, tmp, 0);
+//         return res;
+//     }
+//     public void helper(int[] candidates, int rem, LinkedList<List<Integer>> res,LinkedList<Integer> tmp, int idx) {
+//         if (rem == 0){
+//             LinkedList<Integer> lst = new LinkedList(tmp); // deep copy
+//             res.add(lst);
+//             return;
+//         }else if (rem <0){
+//             return;
+//         }
+
+//         for (int i = idx; i< candidates.length; i++){
+//             if (candidates[i]>rem){
+//                 break; // candidates is sorted
+//             }
+//             if (i>idx && candidates[i-1]==candidates[i]){
+//                 continue;
+//             }
+//             tmp.push(candidates[i]);
+//             helper(candidates, rem-candidates[i], res, tmp, i+1);
+//             tmp.pop();
+//         }
+//     }
+// }
