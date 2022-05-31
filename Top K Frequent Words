@@ -1,0 +1,23 @@
+
+class Solution {
+    public List<String> topKFrequent(String[] words, int k) {
+        HashMap<String, Integer> map = new HashMap<String, Integer>();
+        LinkedList<String> res = new LinkedList();
+        for (String w: words){
+            if (!map.containsKey(w)){
+                map.put(w, 0);
+            }
+            map.put(w, map.get(w)+1);
+        }
+        Queue<String> q = new PriorityQueue<>((a,b)->map.get(a)==map.get(b)? a.compareTo(b):map.get(b)-map.get(a));//max heap
+        for (String key:map.keySet()){
+            q.add(key);
+        }
+        for (int i=0; i<k;i++){
+            String s = q.poll();
+            res.add(s);
+        }
+        
+        return res;
+    }
+}
