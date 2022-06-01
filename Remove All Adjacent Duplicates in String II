@@ -1,0 +1,24 @@
+https://leetcode.com/problems/remove-all-adjacent-duplicates-in-string-ii/
+
+class Solution {
+    public String removeDuplicates(String s, int k) {
+        LinkedList<Integer> deque= new LinkedList();
+        StringBuilder sb = new StringBuilder(s);
+        for(int idx = 0; idx <sb.length(); idx++){
+            if (!deque.isEmpty() && sb.charAt(idx) == sb.charAt(idx-1)){
+                int count = deque.pollLast()+1;
+                if (count == k){
+                    sb.delete(idx+1-k, idx+1);
+                    idx =idx -k;
+                }
+                else{
+                    deque.offerLast(count);
+                }
+            }
+            else{
+                deque.offerLast(1);
+            }
+        }
+        return sb.toString();
+    }
+}
