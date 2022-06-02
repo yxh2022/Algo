@@ -1,0 +1,44 @@
+https://leetcode.com/problems/decode-string/
+
+class Solution {
+    public String decodeString(String s) {
+        if (s.isEmpty()){
+            return s;
+        }
+        LinkedList<Character> stack = new LinkedList();
+         StringBuilder str = new StringBuilder();
+        StringBuilder res = new StringBuilder();
+        StringBuilder counter = new StringBuilder();
+        for (char c: s.toCharArray()){
+            if (c ==']'){
+                str = new StringBuilder();
+                counter = new StringBuilder();
+                while (!stack.isEmpty()&&Character. isLetter(stack.peekLast())){
+                    str.append(stack.pollLast());
+                }
+                stack.pollLast(); //pop "["
+                while (!stack.isEmpty() && Character. isDigit(stack.peekLast())){
+                    counter.append(stack.pollLast());
+                }
+                 int count =0;
+                if (counter.length()>0)
+                    count = Integer.valueOf(counter.reverse().toString());
+                char[] tmp = str.reverse().toString().toCharArray();
+                while (count>0){
+                    for (char cha : tmp){
+                        stack.offerLast(cha);
+                    }                    
+                    count--;
+                }
+            }
+            else{
+                stack.offerLast(c);
+            }  
+            
+        }
+        while (!stack.isEmpty()){
+            res.append(stack.pollLast());
+        }
+        return res.reverse().toString();
+    }
+}
