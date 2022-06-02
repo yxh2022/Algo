@@ -1,0 +1,53 @@
+https://leetcode.com/problems/string-compression/
+
+//in place
+class Solution {
+    public int compress(char[] chars) {
+        int s = 0;
+        int f = 0;
+        while(f<chars.length){
+            char curr = chars[f];
+            int count = 0;
+            while (f<chars.length && curr == chars[f]){
+                f++;
+                count++;
+            }
+            chars[s++] = curr;
+            if (count >1){
+                for (char c: Integer.toString(count).toCharArray()){
+                    chars[s++] = c;
+                }
+            }
+        }
+        return s;
+       
+    }
+}
+
+// //not in place
+// class Solution {
+//     public int compress(char[] chars) {
+//     int s  = 0;
+//     int f = 0;
+//     int count = 0;
+//     StringBuilder sb = new StringBuilder();
+//     while(f<chars.length){
+//         if (chars[s] == chars[f]){
+//             while (f<chars.length && chars[s] == chars[f]){
+//                 f++;
+//             }
+//         }
+//         else{
+//           f++;
+//         }
+//         count = f-s;
+//         sb.append(chars[s]);
+//         if(count>1){
+//             sb.append(count);
+//         }
+//         s = f;
+//         }
+//         chars= sb.toString().toCharArray();
+//         return chars.length;
+//     }
+// }
