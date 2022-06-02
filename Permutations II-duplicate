@@ -1,51 +1,89 @@
 https://leetcode.com/problems/permutations-ii/
 
+//swap
 class Solution {
     public List<List<Integer>> permuteUnique(int[] nums) {
         List<List<Integer>> res = new LinkedList();
-        LinkedList<Integer> perm = new LinkedList();
-
-        HashMap<Integer, Integer> input = new HashMap<Integer, Integer>();
-        for (int i: nums){
-           // if (!input.containsKey(i)){
-           //     input.put(i,1);
-           // }
-           //  else{
-           //     input.put(i,input.get(i)+1);
-           //  }
-            //更简洁
-           if (!input.containsKey(i)){
-                input.put(i,0);
-            }
-           input.put(i,input.get(i)+1);
-        }
-        helper(input, perm, res, nums.length);
+        helper(res, nums, 0);
         return res;
-        
     }
-    
-    
-    public void helper(HashMap<Integer, Integer> nums, LinkedList<Integer> perm, List<List<Integer>> res, int length) {
-        if (perm.size() == length){
-            res.add(new LinkedList<Integer>(perm));
-            return;
+    public List<List<Integer>> helper(List<List<Integer>> res, int[] nums, int level) {
+        if (level == nums.length){
+            List<Integer> perm = convert(nums);
+            res.add(perm);
         }
-        for (Map.Entry<Integer, Integer> entry: nums.entrySet()){
-            int num = entry.getKey();
-            int counter = entry.getValue();
-            if (counter>0)
-            {
-                perm.push(num);
-                nums.put(num, counter-1);
-                helper(nums, perm, res, length);
-                perm.pop();
-                nums.put(num, counter); //注意不是counter+1
-            }
-            else{
-                continue;
+        HashSet<Integer> ha = new HashSet();
+        for (int i=level; i<nums.length; i++){
+            if (!ha.contains(nums[i])){
+                ha.add(nums[i]);
+                swap(nums, i,level);
+                helper(res, nums, level+1);
+                swap(nums, i,level);
             }
         }
-        
+        return res;
     }
     
+    public void swap(int[] nums, int i, int j){
+        int tmp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = tmp;
+    }
+    public List<Integer> convert(int[] nums){
+        List<Integer>  res = new LinkedList<Integer>();
+        for (int i : nums){
+            res.add(i);
+        }
+        return res;
+    }
+
 }
+// class Solution {
+//     public List<List<Integer>> permuteUnique(int[] nums) {
+//         List<List<Integer>> res = new LinkedList();
+//         LinkedList<Integer> perm = new LinkedList();
+
+//         HashMap<Integer, Integer> input = new HashMap<Integer, Integer>();
+//         for (int i: nums){
+//            // if (!input.containsKey(i)){
+//            //     input.put(i,1);
+//            // }
+//            //  else{
+//            //     input.put(i,input.get(i)+1);
+//            //  }
+//             //更简洁
+//            if (!input.containsKey(i)){
+//                 input.put(i,0);
+//             }
+//            input.put(i,input.get(i)+1);
+//         }
+//         helper(input, perm, res, nums.length);
+//         return res;
+        
+//     }
+    
+    
+//     public void helper(HashMap<Integer, Integer> nums, LinkedList<Integer> perm, List<List<Integer>> res, int length) {
+//         if (perm.size() == length){
+//             res.add(new LinkedList<Integer>(perm));
+//             return;
+//         }
+//         for (Map.Entry<Integer, Integer> entry: nums.entrySet()){
+//             int num = entry.getKey();
+//             int counter = entry.getValue();
+//             if (counter>0)
+//             {
+//                 perm.push(num);
+//                 nums.put(num, counter-1);
+//                 helper(nums, perm, res, length);
+//                 perm.pop();
+//                 nums.put(num, counter); //注意不是counter+1
+//             }
+//             else{
+//                 continue;
+//             }
+//         }
+        
+//     }
+    
+// }
