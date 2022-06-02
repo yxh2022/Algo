@@ -1,0 +1,48 @@
+https://leetcode.com/problems/reverse-words-in-a-string/
+
+class Solution {
+  public String reverseWords(String s) {
+    // remove leading spaces
+    s = s.trim();
+    // split by multiple spaces
+    List<String> wordList = Arrays.asList(s.split("\\s+"));
+    Collections.reverse(wordList);
+    return String.join(" ", wordList);
+  }
+}
+
+// class Solution {
+//     public String reverseWords(String s) {
+//         s = s.trim();
+//         StringBuilder sb = new StringBuilder();
+//         String[] input = s.split("\\s+");
+//         for (String str:input){  //reverse single word        
+//             char[] ch = str.toCharArray();
+//             reverseWord(ch, 0, ch.length-1);
+//             sb.append(ch);
+//             sb.append(" ");
+//         }
+//         String str1 = sb.toString().trim();
+//         char[] ch2 = str1.toCharArray();
+//         reverseWord(ch2, 0, ch2.length-1); //reverse the while string
+//         sb = new StringBuilder();
+//         sb.append(ch2);
+//         return sb.toString();
+        
+//     }
+    
+//      public void reverseWord(char[] s, int i, int j) {
+//         if (i >= j){
+//             return;
+//         }
+//         swap(s, i, j);
+//         reverseWord(s,i+1, j-1);
+//     }
+    
+//     public void swap(char[] s, int i, int j) {
+//         char tmp = s[i];
+//         s[i] = s[j];
+//         s[j] = tmp;        
+//     }
+    
+// }
