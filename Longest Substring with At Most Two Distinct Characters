@@ -1,0 +1,27 @@
+https://leetcode.com/problems/longest-substring-with-at-most-two-distinct-characters/
+
+class Solution {
+    public int lengthOfLongestSubstringTwoDistinct(String s) {
+        int l = 0;
+        int max = 0;
+        int r = 0;
+        HashMap<Character, Integer> map = new HashMap();
+        while (r<s.length()){
+            char cur = s.charAt(r);
+            map.put(cur, r); //r为 cur 最右的位置
+            
+           if (map.size()>2){ 
+                 // delete the leftmost character
+                int del_idx = Collections.min(map.values());
+                map.remove(s.charAt(del_idx));
+                l = del_idx+1;
+            }
+            if (r-l+1>max){
+                max = r-l+1;
+            }
+            r++;            
+        }
+         return max; 
+        
+    }
+}
