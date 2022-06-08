@@ -1,0 +1,48 @@
+Given a binary tree, count the number of nodes in each node’s left subtree, and store it in the numNodesLeft field.
+
+Examples
+
+ 
+
+                  1(6)
+
+               /          \
+
+           2(3)        3(0)
+
+          /      \
+
+      4(1)     5(0)
+
+    /        \        \
+
+6(0)     7(0)   8(0)
+
+The numNodesLeft is shown in parentheses.
+
+https://app.laicode.io/app/problem/646
+/**
+ * public class TreeNodeLeft {
+ *   public int key;
+ *   public TreeNodeLeft left;
+ *   public TreeNodeLeft right;
+ *   public int numNodesLeft;
+ *   public TreeNodeLeft(int key) {
+ *     this.key = key;
+ *   }
+ * }
+ */
+public class Solution {
+  public void numNodesLeft(TreeNodeLeft root) {
+    int res = helper(root);
+    }
+  public int helper(TreeNodeLeft root) {
+    if (root ==  null){
+      return 0;
+    }
+    int left = helper(root.left);
+    int right = helper(root.right);
+    root.numNodesLeft = left;
+    return left + right + 1;
+  }
+}
